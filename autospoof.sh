@@ -24,7 +24,7 @@ for prange in ${spoofed}; do
     iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport ${prange} -j REDIRECT --to-ports 4444
 done
 
-portspoof -c /root/portspoof/portspoof/tools/portspoof.conf -s /root/portspoof/portspoof/tools/portspoof_signatures -D
+portspoof -c /root/portspoof/tools/portspoof.conf -s /root/portspoof/tools/portspoof_signatures -D
 iptables --table nat --list
 
 if grep -q /root/autospoof.sh /var/spool/cron/crontabs/root; then
