@@ -30,7 +30,7 @@ iptables --table nat --list
 if grep -q /root/autospoof.sh /var/spool/cron/crontabs/root; then
     echo already in crontab
 else
-    (crontab -l ; echo "@reboot /bin/bash /root/autospoof.sh") | crontab -
+    (crontab -l ; echo "@reboot /root/autospoof.sh") | crontab -
 fi
 
 echo "All DONE"
