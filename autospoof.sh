@@ -15,8 +15,10 @@ if [ ! -d "/root/portspoof" ]; then
     make install
 fi
 
+iptables --table nat -F
+
 #change this line - sets the ranges in a variable
-spoofed="1:19 23:79 81:138 140:442 444:4199 4201:65535"
+spoofed="1:19 23:138 140:442 444:65535"
 
 for prange in ${spoofed}; do
     iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport ${prange} -j REDIRECT --to-ports 4444
@@ -25,8 +27,9 @@ done
 portspoof -c /root/portspoof/portspoof/tools/portspoof.conf -s /root/portspoof/portspoof/tools/portspoof_signatures -D
 iptables --table nat --list
 
-string="$(grep -rnw /var/spool/cron/ -e /root/autospoof.sh)"
-if [[ ! *"/root/autospoof.sh"* == ${string} ]]; then
+if grep -q /root/autospoof.sh /var/spool/cron/crontabs/root; then
+    echo already in crontab
+else
     (crontab -l ; echo "@reboot /bin/bash /root/autospoof.sh") | crontab -
 fi
 
