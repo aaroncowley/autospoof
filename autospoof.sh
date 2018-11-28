@@ -9,9 +9,10 @@ fi
 if [ ! -d "/root/portspoof" ]; then
     # Control will enter here if portspoof doesn't exist.
     git clone https://github.com/drk1wi/portspoof.git /root/portspoof
-    /root/portspoof/configure 
-    /root/portspoof/make
-    /root/portspoof/make install
+    cd /root/portspoof
+    ./configure 
+    make
+    make install
 fi
 
 iptables --table nat -F
