@@ -25,7 +25,10 @@ done
 portspoof -c /root/portspoof/portspoof/tools/portspoof.conf -s /root/portspoof/portspoof/tools/portspoof_signatures -D
 iptables --table nat --list
 
-(crontab -l ; echo "@reboot /bin/bash /root/autospoof.sh") | crontab -
+string="$(grep -rnw /var/spool/cron/ -e /root/autospoof.sh)"
+if [[ ! *"/root/autospoof.sh"* == ${string} ]]; then
+    (crontab -l ; echo "@reboot /bin/bash /root/autospoof.sh") | crontab -
+fi
 
 echo "All DONE"
 exit 1
