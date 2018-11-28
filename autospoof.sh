@@ -1,4 +1,3 @@
-# autospoof.sh
 #! /bin/bash
 
 if [[ $EUID -ne 0 ]]; then
@@ -11,7 +10,9 @@ cd /root
 if [ ! -d "/root/portspoof" ]; then
     # Control will enter here if portspoof doesn't exist.
     git clone https://github.com/drk1wi/portspoof.git && cd portspoof
-    ./configure && make && && sudo make install
+    ./configure 
+    make
+    make install
 fi
 
 #change this line - sets the ranges in a variable
@@ -26,5 +27,5 @@ iptables --table nat --list
 
 (crontab -l ; echo "@reboot /bin/bash /root/autospoof.sh") | crontab -
 
-echo "script exited"
+echo "All DONE"
 exit 1
