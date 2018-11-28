@@ -8,7 +8,7 @@ fi
 
 if [ ! -d "/root/portspoof" ]; then
     # Control will enter here if portspoof doesn't exist.
-    git clone https://github.com/drk1wi/portspoof.git /root
+    git clone https://github.com/drk1wi/portspoof.git /root/portspoof
     /root/portspoof/configure 
     /root/portspoof/make
     /root/portspoof/make install
